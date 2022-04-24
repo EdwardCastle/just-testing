@@ -16,13 +16,14 @@ class UserProfileManager(BaseUserManager):
 
         user.set_password(password)
         user.save(using=self._db)
-        return user.save()
+        return user
 
     def create_superuser(self, email, name, password):
         """Create superuser"""
-        user = self.create_superuser(email, name, password)
-        user.is_superuser = True
+        user = self.create_user(email, name, password)
         user.is_staff = True
+        user.is_superuser = True
+        user.is_active = True
         user.save(using=self._db)
 
         return user
